@@ -1,0 +1,16 @@
+version: "3"
+services:
+  app:
+    build: ./app
+    container_name: app_flask
+    restart: always
+    expose: 
+      - 5000
+
+
+  nginx:
+    build: ./nginx
+    container_name: nginx_flask
+    restart: always
+    ports: 
+      - 8005:80

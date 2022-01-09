@@ -1,0 +1,7 @@
+version: "3"
+services:
+  website:
+    image: website-3:1.0.0
+    container_name: website-4
+    ports:
+      - 8004:80

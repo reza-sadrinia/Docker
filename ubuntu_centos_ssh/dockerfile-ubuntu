@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+RUN apt update -y 
+RUN apt install openssh-server -y && apt install sudo -y
+RUN /usr/bin/ssh-keygen -A 
+RUN mkdir /var/run/sshd
+RUN echo 'root:rezaiv' | chpasswd
+RUN useradd -ms /bin/bash reza 
+RUN echo 'reza:rezaiv' | chpasswd
+RUN echo "reza  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/reza
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
